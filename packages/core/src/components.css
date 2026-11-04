@@ -1,0 +1,15 @@
+@layer components {
+  .sg-button { @apply inline-flex items-center justify-center gap-2 rounded-sg px-4 py-2.5 text-sm font-semibold transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sg-primary disabled:cursor-not-allowed disabled:opacity-50; }
+  .sg-button-primary { @apply bg-sg-primary text-white hover:bg-sg-primary-hover; }
+  .sg-button-secondary { @apply bg-sg-accent text-white; }
+  .sg-button-outline { @apply border border-sg-border bg-sg-surface text-sg-ink; }
+  .sg-button-sm { @apply px-3 py-1.5 text-xs; }
+  .sg-button-lg { @apply px-6 py-3 text-base; }
+  .sg-card { @apply rounded-sg-card border border-sg-border bg-sg-surface p-5 text-sg-ink shadow-sg-card; }
+  .sg-badge { @apply inline-flex items-center rounded-full bg-teal-100 px-2.5 py-1 text-xs font-semibold text-teal-900; }
+  .sg-input { @apply block w-full rounded-sg border border-sg-border bg-sg-surface px-3 py-2.5 text-sm text-sg-ink placeholder:text-sg-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sg-primary; }
+  .sg-alert { @apply rounded-sg border border-sg-border bg-sg-surface p-4 text-sm text-sg-ink; }
+  .sg-progress { @apply h-2 w-full overflow-hidden rounded-full bg-slate-200; }
+  .sg-progress-bar { @apply h-full rounded-full bg-sg-teal; }
+  .sg-spinner { @apply inline-block h-5 w-5 animate-spin rounded-full border-2 border-sg-border border-t-sg-primary; }
+}

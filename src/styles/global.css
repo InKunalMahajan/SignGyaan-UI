@@ -1,0 +1,15 @@
+@import "tailwindcss";
+@import "../../packages/core/src/tokens.css";
+@import "../../packages/core/src/components.css";
+@source "../pages";
+@source "../layouts";
+html {scroll-behavior:smooth}
+body {margin:0;background:var(--color-sg-page);color:var(--color-sg-ink);font-family:Arial,system-ui,sans-serif}
+a {color:inherit}
+a:focus-visible,button:focus-visible {outline:2px solid var(--color-sg-primary);outline-offset:3px}
+.docs h1 {font-size:2rem;font-weight:750;letter-spacing:-.04em;margin-bottom:1rem}
+.docs h2 {font-size:1.35rem;font-weight:700;margin:2rem 0 .7rem}
+.docs p,.docs li {color:var(--color-sg-muted);line-height:1.8}
+.docs ul {list-style:disc;margin-left:1.5rem}
+.docs pre {background:#151925;color:#eff4ff;padding:1.1rem;border-radius:.75rem;overflow:auto;margin:1rem 0}
+.docs code:not(pre code) {background:#e9eaf0;color:#4334a2;padding:.15rem .3rem;border-radius:.3rem}
