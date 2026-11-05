@@ -36,7 +36,7 @@ test('Phase 4: seven new components have styles and previews',()=>{
  const demo=read('src/components/ComponentDemo.astro');
  const docs=read('src/layouts/DocsLayout.astro');
  for(const name of ['radio','textarea','switch','accordion','table','avatar','separator']){
-   assert.match(css,new RegExp('\\.sg-'+name+'\\\\b'));
+   assert.ok(css.includes('.sg-'+name+' {'));
    assert.ok(demo.includes("component==='"+name+"'"));
    assert.ok(docs.includes('/docs/'+name+'/'));
  }
