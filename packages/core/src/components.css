@@ -23,4 +23,20 @@
   .sg-sidebar { @apply w-full max-w-64 border-r border-sg-border bg-sg-surface p-4 text-sg-ink; }
   .sg-nav-link { @apply block rounded-sg px-3 py-2 text-sm text-sg-muted hover:bg-sg-page hover:text-sg-ink; }
   .sg-nav-link[aria-current="page"] { @apply bg-sg-page font-semibold text-sg-primary; }
+  .sg-radio { @apply size-4 accent-sg-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sg-primary; }
+  .sg-textarea { @apply block min-h-28 w-full rounded-sg border border-sg-border bg-sg-surface px-3 py-2.5 text-sm text-sg-ink placeholder:text-sg-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sg-primary; }
+  .sg-switch { @apply relative inline-flex h-6 w-11 shrink-0 cursor-pointer items-center rounded-full bg-slate-400 p-0.5 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sg-primary; }
+  .sg-switch[aria-checked="true"] { @apply bg-sg-primary; }
+  .sg-switch-thumb { @apply size-5 rounded-full bg-white shadow-sm transition-transform; }
+  .sg-switch[aria-checked="true"] .sg-switch-thumb { @apply translate-x-5; }
+  .sg-accordion { @apply rounded-sg border border-sg-border bg-sg-surface text-sg-ink; }
+  .sg-accordion summary { @apply cursor-pointer px-4 py-3 font-medium focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sg-primary; }
+  .sg-accordion-content { @apply border-t border-sg-border px-4 py-3 text-sm text-sg-muted; }
+  .sg-table-wrap { @apply w-full overflow-x-auto rounded-sg border border-sg-border; }
+  .sg-table { @apply w-full min-w-96 border-collapse text-left text-sm text-sg-ink; }
+  .sg-table thead { @apply bg-sg-page; }
+  .sg-table th { @apply border-b border-sg-border px-4 py-3 font-semibold; }
+  .sg-table td { @apply border-b border-sg-border px-4 py-3; }
+  .sg-avatar { @apply inline-flex size-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-sg-primary text-sm font-semibold text-white; }
+  .sg-separator { @apply h-px w-full border-0 bg-sg-border; }
 }

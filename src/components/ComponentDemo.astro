@@ -14,7 +14,14 @@ const examples: Record<string,string> = {
  tabs: '<div role="tablist" class="sg-tabs"><button role="tab" class="sg-tab" aria-selected="true">Overview</button><button role="tab" class="sg-tab" aria-selected="false">Lessons</button></div>',
  modal: '<dialog class="sg-modal"><h3>Confirm action</h3><button class="sg-button sg-button-outline">Close</button></dialog>',
  navbar: '<nav class="sg-navbar" aria-label="Example"><a href="#">SignGyaan</a><a href="#">Courses</a></nav>',
- sidebar: '<nav class="sg-sidebar" aria-label="Example"><a class="sg-nav-link" aria-current="page" href="#">Dashboard</a><a class="sg-nav-link" href="#">Courses</a></nav>'
+ sidebar: '<nav class="sg-sidebar" aria-label="Example"><a class="sg-nav-link" aria-current="page" href="#">Dashboard</a><a class="sg-nav-link" href="#">Courses</a></nav>',
+ radio: '<fieldset><legend>Difficulty</legend><label><input class="sg-radio" type="radio" name="level" checked /> Beginner</label><label><input class="sg-radio" type="radio" name="level" /> Advanced</label></fieldset>',
+ textarea: '<label for="comments">Your notes</label>\n<textarea id="comments" class="sg-textarea" placeholder="Write a note"></textarea>',
+ switch: '<button type="button" class="sg-switch" role="switch" aria-checked="false" aria-label="Enable notifications"><span class="sg-switch-thumb"></span></button>',
+ accordion: '<details class="sg-accordion"><summary>What is SignGyaan UI?</summary><div class="sg-accordion-content">A free Tailwind CSS component library.</div></details>',
+ table: '<div class="sg-table-wrap"><table class="sg-table"><caption class="sr-only">Course list</caption><thead><tr><th scope="col">Course</th><th scope="col">Progress</th></tr></thead><tbody><tr><td>Computer</td><td>65%</td></tr></tbody></table></div>',
+ avatar: '<span class="sg-avatar" role="img" aria-label="Learner avatar">SG</span>',
+ separator: '<hr class="sg-separator" />'
 };
 const code=examples[component]||'';
 ---
@@ -37,6 +44,13 @@ const code=examples[component]||'';
   {component==='modal' && <div><button type="button" class="sg-button sg-button-primary" data-open-modal>Open modal</button><dialog class="sg-modal w-[min(90vw,28rem)]" data-modal aria-labelledby="demo-modal-title"><h3 class="mb-2 text-lg font-semibold" id="demo-modal-title">Continue learning?</h3><p class="mb-5 text-sm text-sg-muted">Your course progress will be saved.</p><form method="dialog"><button class="sg-button sg-button-outline">Close</button></form></dialog></div>}
   {component==='navbar' && <nav class="sg-navbar rounded-sg" aria-label="Component preview"><span class="font-bold">SignGyaan</span><div class="flex flex-wrap gap-3 text-sm"><span>Home</span><span>Courses</span><span>Docs</span></div></nav>}
   {component==='sidebar' && <nav class="sg-sidebar rounded-sg" aria-label="Component preview"><span class="mb-2 block text-xs font-semibold text-sg-muted">LEARNER</span><a class="sg-nav-link" aria-current="page" href="#main-content">Dashboard</a><a class="sg-nav-link" href="#main-content">Courses</a><a class="sg-nav-link" href="#main-content">Scoreboard</a></nav>}
+  {component==='radio' && <fieldset class="flex flex-wrap gap-4"><legend class="mb-2 text-sm font-medium">Choose difficulty</legend><label class="flex items-center gap-2"><input class="sg-radio" type="radio" name="demo-level" checked/>Beginner</label><label class="flex items-center gap-2"><input class="sg-radio" type="radio" name="demo-level"/>Advanced</label></fieldset>}
+  {component==='textarea' && <div class="max-w-sm"><label for="demo-notes" class="mb-2 block text-sm font-medium">Learning notes</label><textarea id="demo-notes" class="sg-textarea" placeholder="Write your notes here"></textarea></div>}
+  {component==='switch' && <div class="flex items-center gap-3"><button type="button" class="sg-switch" role="switch" aria-label="Enable notifications" aria-checked="false" data-switch><span class="sg-switch-thumb" aria-hidden="true"></span></button><span class="text-sm text-sg-ink" data-switch-label>Notifications off</span></div>}
+  {component==='accordion' && <div class="space-y-2"><details class="sg-accordion"><summary>What is SignGyaan UI?</summary><div class="sg-accordion-content">A free Tailwind CSS design system for your websites.</div></details><details class="sg-accordion"><summary>Can I use it with Laravel?</summary><div class="sg-accordion-content">Yes, use shared CSS with Laravel Blade components.</div></details></div>}
+  {component==='table' && <div class="sg-table-wrap"><table class="sg-table"><caption class="sr-only">Course progress example</caption><thead><tr><th scope="col">Course</th><th scope="col">Progress</th></tr></thead><tbody><tr><td>Basic Computer</td><td>65%</td></tr><tr><td>Mathematics</td><td>42%</td></tr></tbody></table></div>}
+  {component==='avatar' && <div class="flex items-center gap-3"><span class="sg-avatar" role="img" aria-label="SignGyaan learner">SG</span><span class="sg-avatar" role="img" aria-label="Admin">AD</span></div>}
+  {component==='separator' && <div class="max-w-sm space-y-3 text-sm text-sg-ink"><p>Section one</p><hr class="sg-separator"/><p>Section two</p></div>}
  </div>
  <div class="flex items-center justify-between border-t border-sg-border px-4 py-2"><span class="text-xs text-sg-muted">HTML / shared sg-* CSS classes</span><span id="copy-feedback" class="sr-only" role="status" aria-live="polite" data-copy-status></span></div>
  <pre class="!m-0 !max-w-full !overflow-x-auto !rounded-none text-xs" tabindex="0" aria-label="HTML source code"><code>{code}</code></pre>
@@ -65,6 +79,13 @@ const code=examples[component]||'';
      if(fill) fill.style.width=value+'%';
      if(track)track.setAttribute('aria-valuenow',value);
      if(label)label.textContent=value+'%';
+   });
+   const switchButton=demo.querySelector<HTMLButtonElement>('[data-switch]');
+   switchButton?.addEventListener('click',()=>{
+      const enabled=switchButton.getAttribute('aria-checked')!=='true';
+      switchButton.setAttribute('aria-checked',String(enabled));
+      const label=demo.querySelector<HTMLElement>('[data-switch-label]');
+      if(label)label.textContent=enabled?'Notifications on':'Notifications off';
    });
    const dialog=demo.querySelector<HTMLDialogElement>('[data-modal]');
    demo.querySelector<HTMLButtonElement>('[data-open-modal]')?.addEventListener('click',()=>dialog?.showModal());

@@ -29,3 +29,17 @@ test('shared styles honor reduced motion and mobile layout',()=>{
  assert.match(css,/overflow-x:auto/);
  assert.match(components,/max-w-64/);
 });
+
+
+test('Phase 4: seven new components have styles and previews',()=>{
+ const css=read('packages/core/src/components.css');
+ const demo=read('src/components/ComponentDemo.astro');
+ const docs=read('src/layouts/DocsLayout.astro');
+ for(const name of ['radio','textarea','switch','accordion','table','avatar','separator']){
+   assert.match(css,new RegExp('\\.sg-'+name+'\\\\b'));
+   assert.ok(demo.includes("component==='"+name+"'"));
+   assert.ok(docs.includes('/docs/'+name+'/'));
+ }
+ assert.match(demo,/aria-checked/);
+ assert.match(demo,/scope="col"/);
+});
