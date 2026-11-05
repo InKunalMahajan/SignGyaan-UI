@@ -86,3 +86,14 @@ test('component docs have framework and QA guidance',()=>{
  }
  assert.match(read('src/content/docs/testing.md'),/## Manual browser review/);
 });
+
+test('primary buttons have explicit white text and homepage is simplified',()=>{
+ const css=read('src/styles/global.css');
+ const home=read('src/pages/index.astro');
+ const layout=read('src/layouts/DocsLayout.astro');
+ assert.match(css,/a\.sg-button-primary[^{]*\{ color:#fff;/);
+ assert.doesNotMatch(css,/^a \{color:inherit\}$/m);
+ assert.match(home,/Build better interfaces, faster/);
+ assert.match(home,/sg-home-simple-grid/);
+ assert.doesNotMatch(layout,/class="sg-topic-bar"/);
+});

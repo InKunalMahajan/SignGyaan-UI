@@ -5,43 +5,45 @@ const base=import.meta.env.BASE_URL;
 const url=(path:string)=>base+path.replace(/^\//,'');
 ---
 <DocsLayout title="Home">
-<section class="sg-page-intro">
- <PageHeader eyebrow="OPEN SOURCE · TAILWIND CSS V4" title="Build consistent interfaces with SignGyaan UI" description="A framework-independent design foundation with 20 Free components. Use shared CSS in Laravel Blade, React, Vue, or plain HTML."/>
- <div class="mt-7 flex flex-wrap gap-3">
-  <a class="sg-button sg-button-primary" href={url('/docs/installation/')}>Get started</a>
-  <a class="sg-button sg-button-outline" href={url('/components/')}>Browse all components</a>
- </div>
- <p class="mt-4 text-xs text-sg-muted">No Starlight, no paid starter template, no mandatory JavaScript framework.</p>
-</section>
-<section aria-label="Project highlights" class="grid gap-4 py-7 sm:grid-cols-3">
- <article class="sg-card"><p class="text-3xl font-bold text-sg-primary">20</p><h2 class="mt-2 font-bold">Free components</h2><p class="mt-2 text-sm leading-7 text-sg-muted">Live previews, semantic markup and copyable examples.</p></article>
- <article class="sg-card"><p class="text-3xl font-bold text-sg-primary">3</p><h2 class="mt-2 font-bold">Framework examples</h2><p class="mt-2 text-sm leading-7 text-sg-muted">Blade, React and Vue wrappers sharing one CSS foundation.</p></article>
- <article class="sg-card"><p class="text-3xl font-bold text-sg-primary">0</p><h2 class="mt-2 font-bold">Paid dependencies required</h2><p class="mt-2 text-sm leading-7 text-sg-muted">Build with the free core and your own application logic.</p></article>
-</section>
-<section class="mt-8 sg-card">
- <div class="mb-5 flex flex-wrap items-center justify-between gap-3">
-  <div><h2 class="text-xl font-bold">Component preview</h2><p class="mt-1 text-sm text-sg-muted">Use these examples as a starting point.</p></div>
-  <a href={url('/docs/button/')} class="text-sm font-semibold text-sg-primary underline underline-offset-4">Button documentation</a>
- </div>
- <div class="flex flex-wrap items-center gap-3">
-  <a class="sg-button sg-button-primary" href={url('/components/')}>Explore components</a>
-  <button type="button" class="sg-button sg-button-outline" id="demo-action">Try interaction</button>
-  <span class="sg-badge">Active</span>
- </div>
- <p id="demo-action-result" class="mt-4 text-sm text-sg-muted" role="status" aria-live="polite">Select “Try interaction” to see feedback.</p>
-</section>
-<section class="mt-10 space-y-4">
- <h2 class="text-2xl font-bold">Get started in three steps</h2>
- <div class="grid gap-4 sm:grid-cols-3">
-  <article class="sg-card"><span class="text-xs font-bold text-sg-primary">01</span><h3 class="mt-2 font-semibold">Install</h3><p class="mt-2 text-sm text-sg-muted">Clone the library and build its shared CSS.</p></article>
-  <article class="sg-card"><span class="text-xs font-bold text-sg-primary">02</span><h3 class="mt-2 font-semibold">Choose</h3><p class="mt-2 text-sm text-sg-muted">Find a component and copy its HTML example.</p></article>
-  <article class="sg-card"><span class="text-xs font-bold text-sg-primary">03</span><h3 class="mt-2 font-semibold">Customize</h3><p class="mt-2 text-sm text-sg-muted">Edit brand colors and use the styles across frameworks.</p></article>
- </div>
-</section>
+ <section class="sg-page-intro sg-home-intro">
+  <PageHeader eyebrow="SIGNGYAAN UI · FREE OPEN-SOURCE COMPONENTS" title="Build better interfaces, faster." description="Simple, reusable Tailwind CSS components with clear documentation for HTML, Laravel Blade, React and Vue."/>
+  <div class="sg-home-actions">
+   <a class="sg-button sg-button-primary" href={url('/docs/installation/')}>Get started</a>
+   <a class="sg-button sg-button-outline" href={url('/components/')}>Browse 20 components</a>
+  </div>
+ </section>
+ <section aria-label="Explore SignGyaan UI" class="sg-home-simple-grid">
+  <a href={url('/docs/installation/')}>
+   <h2>Get started</h2>
+   <p>Installation and first steps with the CSS library.</p>
+  </a>
+  <a href={url('/components/')}>
+   <h2>Components</h2>
+   <p>Explore 20 Free components with live examples.</p>
+  </a>
+  <a href={url('/docs/tokens/')}>
+   <h2>Design foundations</h2>
+   <p>Colors, tokens, themes and accessibility principles.</p>
+  </a>
+ </section>
+ <section class="mt-10">
+  <div class="mb-5">
+   <h2 class="text-xl font-bold">Component preview</h2>
+   <p class="mt-2 text-sm text-sg-muted">See how the buttons and status badge look with the shared design system.</p>
+  </div>
+  <div class="sg-card">
+   <div class="flex flex-wrap items-center gap-3">
+    <button type="button" class="sg-button sg-button-primary" id="demo-action">Try button</button>
+    <a class="sg-button sg-button-outline" href={url('/docs/button/')}>Button documentation</a>
+    <span class="sg-badge">Active</span>
+   </div>
+   <p id="demo-action-result" class="mt-4 text-sm text-sg-muted" role="status" aria-live="polite">Select Try button to test the interaction.</p>
+  </div>
+ </section>
 </DocsLayout>
 <script>
  document.querySelector('#demo-action')?.addEventListener('click',()=>{
-  const out=document.querySelector('#demo-action-result');
-  if(out)out.textContent='Interaction works. Explore the component documentation for more examples.';
+  const result=document.querySelector('#demo-action-result');
+  if(result)result.textContent='Button is working.';
  });
 </script>
