@@ -55,3 +55,12 @@ test('UI review: component catalog and homepage inventory remain consistent',()=
  assert.match(layout,/\/components\//);
  assert.doesNotMatch(home,/seven free components/i);
 });
+
+test('developer documentation layout includes search, on-page TOC and grouped navigation',()=>{
+ const layout=read('src/layouts/DocsLayout.astro');
+ assert.match(layout,/docs-search-dialog/);
+ assert.match(layout,/toc-links/);
+ assert.match(layout,/sg-doc-shell/);
+ assert.match(layout,/aria-label="Documentation"/);
+ assert.match(layout,/aria-pressed/);
+});

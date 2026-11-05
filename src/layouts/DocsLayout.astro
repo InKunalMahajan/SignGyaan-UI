@@ -1,90 +1,155 @@
 ---
 import '../styles/global.css';
 const {title='SignGyaan UI',description='Free, accessible Tailwind CSS components'}=Astro.props;
-const groups=[
- {title:'Start',links:[['Overview','/'],['Component Catalog','/components/'],['Installation','/docs/installation/'],['Architecture','/docs/architecture/']]},
- {title:'Foundations',links:[['Tokens','/docs/tokens/'],['Themes','/docs/themes/'],['Accessibility','/docs/accessibility/']]},
- {title:'Components',links:[['Button','/docs/button/'],['Card','/docs/card/'],['Badge','/docs/badge/'],['Input','/docs/input/'],['Alert','/docs/alert/'],['Progress','/docs/progress/'],['Spinner','/docs/spinner/'],['Checkbox','/docs/checkbox/'],['Select','/docs/select/'],['Tabs','/docs/tabs/'],['Modal','/docs/modal/'],['Navbar','/docs/navbar/'],['Sidebar','/docs/sidebar/'],['Radio','/docs/radio/'],['Textarea','/docs/textarea/'],['Switch','/docs/switch/'],['Accordion','/docs/accordion/'],['Table','/docs/table/'],['Avatar','/docs/avatar/'],['Separator','/docs/separator/']]},
- {title:'Frameworks',links:[['Blade','/docs/blade/'],['React','/docs/react/'],['Vue','/docs/vue/']]}
+const base=import.meta.env.BASE_URL;
+const url=(path:string)=>base+path.replace(/^\//,'');
+const pathname=Astro.url.pathname.replace(base,'/').replace(/\/+/g,'/');
+const groupList=[
+ {name:'Getting started',links:[['Overview','/'],['Component catalog','/components/'],['Installation','/docs/installation/'],['Architecture','/docs/architecture/']]},
+ {name:'Foundations',links:[['Design tokens','/docs/tokens/'],['Themes','/docs/themes/'],['Accessibility','/docs/accessibility/']]},
+ {name:'Actions & feedback',links:[['Button','/docs/button/'],['Badge','/docs/badge/'],['Alert','/docs/alert/'],['Spinner','/docs/spinner/'],['Progress','/docs/progress/'],['Modal','/docs/modal/']]},
+ {name:'Forms',links:[['Input','/docs/input/'],['Textarea','/docs/textarea/'],['Select','/docs/select/'],['Checkbox','/docs/checkbox/'],['Radio','/docs/radio/'],['Switch','/docs/switch/']]},
+ {name:'Navigation & layout',links:[['Navbar','/docs/navbar/'],['Sidebar','/docs/sidebar/'],['Tabs','/docs/tabs/'],['Accordion','/docs/accordion/'],['Separator','/docs/separator/']]},
+ {name:'Data display',links:[['Card','/docs/card/'],['Table','/docs/table/'],['Avatar','/docs/avatar/']]},
+ {name:'Frameworks',links:[['Laravel Blade','/docs/blade/'],['React','/docs/react/'],['Vue','/docs/vue/']]}
 ];
-const base = import.meta.env.BASE_URL;
-const url = (path) => base + path.replace(/^\//, '');
-const pathname=Astro.url.pathname.replace(base, '/').replace(/\/+/g,'/');
+const allLinks=groupList.flatMap(g=>g.links.map(([name,href])=>({name,href,category:g.name})));
+const onDoc=pathname.startsWith('/docs/');
+const currentGroup=groupList.find(g=>g.links.some(([,href])=>href===pathname))?.name;
 ---
 <!doctype html>
 <html lang="en" data-theme="light">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="description" content={description} />
-<title>{title} | SignGyaan UI</title>
-<script is:inline>try { document.documentElement.dataset.theme=localStorage.getItem('sg-theme')==='dark'?'dark':'light'; } catch (_) {}</script>
+ <meta charset="utf-8" />
+ <meta name="viewport" content="width=device-width, initial-scale=1"/>
+ <meta name="description" content={description}/>
+ <meta name="color-scheme" content="light dark"/>
+ <title>{title} | SignGyaan UI</title>
+ <script is:inline>try{document.documentElement.dataset.theme=localStorage.getItem('sg-theme')==='dark'?'dark':'light'}catch(_){}</script>
 </head>
 <body class="min-h-screen">
 <a class="sg-skip-link" href="#main-content">Skip to main content</a>
-<header class="sticky top-0 z-40 border-b border-sg-border bg-sg-surface">
- <div class="mx-auto flex min-h-16 max-w-7xl items-center justify-between gap-2 px-3 py-2 sm:px-4">
-  <a href={url("/")} class="flex min-w-0 items-center gap-2 text-sm font-bold no-underline sm:text-base"><span class="rounded-sg bg-sg-primary px-2.5 py-2 text-white">SG</span><span class="truncate">SignGyaan UI</span></a>
-  <nav class="hidden gap-5 text-sm md:flex" aria-label="Main"><a href={url("/docs/installation/")}>Docs</a><a href={url("/components/")}>Components</a><a href="https://github.com/InKunalMahajan/SignGyaan-UI">GitHub</a></nav>
-  <div class="flex shrink-0 gap-2"><button id="theme-button" type="button" class="sg-button sg-button-outline sg-button-sm" aria-label="Switch to dark mode" aria-pressed="false"><span aria-hidden="true">◐</span> <span id="theme-label">Dark</span></button><button id="menu-button" type="button" class="sg-button sg-button-outline sg-button-sm lg:hidden" aria-controls="docs-sidebar" aria-expanded="false" aria-label="Open documentation menu"><span id="menu-label">Menu</span></button></div>
+<header class="sg-doc-header">
+ <div class="sg-header-inner">
+  <a href={url('/')} class="sg-brand" aria-label="SignGyaan UI home">
+   <span class="sg-brand-mark" aria-hidden="true">SG</span>
+   <span>SignGyaan <span class="sg-brand-ui">UI</span></span>
+  </a>
+  <nav class="sg-global-nav" aria-label="Primary navigation">
+   <a href={url('/')} aria-current={pathname==='/'?'page':undefined}>Overview</a>
+   <a href={url('/docs/installation/')} aria-current={onDoc?'page':undefined}>Documentation</a>
+   <a href={url('/components/')} aria-current={pathname.startsWith('/components/')?'page':undefined}>Components</a>
+   <a href={url('/docs/blade/')}>Frameworks</a>
+  </nav>
+  <div class="sg-header-actions">
+   <button id="docs-search-open" type="button" class="sg-search-trigger" aria-haspopup="dialog" aria-controls="docs-search-dialog"><span aria-hidden="true">⌕</span><span class="sg-search-hint">Search documentation</span><kbd class="sg-search-key">Ctrl K</kbd></button>
+   <button id="theme-button" type="button" class="sg-icon-button" aria-label="Switch to dark mode" aria-pressed="false" title="Toggle light or dark theme"><span aria-hidden="true">◐</span><span id="theme-label" class="sr-only">Dark</span></button>
+   <a class="sg-icon-button sg-github-link" aria-label="GitHub repository" title="GitHub repository" href="https://github.com/InKunalMahajan/SignGyaan-UI">GH</a>
+   <button id="menu-button" type="button" class="sg-icon-button sg-menu-button" aria-controls="docs-sidebar" aria-expanded="false" aria-label="Open documentation menu"><span id="menu-label">☰</span></button>
+  </div>
  </div>
 </header>
-<div class="mx-auto flex max-w-7xl flex-col gap-0 px-4 lg:flex-row lg:gap-8">
- <aside id="docs-sidebar" class="hidden w-full shrink-0 border-b border-sg-border bg-sg-surface py-4 lg:sticky lg:top-16 lg:block lg:h-[calc(100vh-4rem)] lg:w-56 lg:overflow-y-auto lg:border-b-0 lg:border-r lg:py-8" aria-label="Documentation">
-  {groups.map(group=><section class="mb-6"><h2 class="mb-2 text-xs font-bold uppercase text-sg-muted">{group.title}</h2><ul>{group.links.map(([name,href])=><li><a href={url(href)} aria-current={pathname===href?'page':undefined} class:list={['block rounded-sg px-3 py-2 text-sm hover:bg-sg-page',pathname===href?'font-semibold text-sg-primary':'text-sg-muted']}>{name}</a></li>)}</ul></section>)}
- </aside>
- <main id="main-content" tabindex="-1" class="min-w-0 flex-1 py-8 lg:py-10"><slot /><footer class="mt-20 border-t border-sg-border pt-6 text-xs text-sg-muted">SignGyaan UI · Astro + Tailwind CSS · MIT Licensed</footer></main>
+<div class="sg-topic-bar">
+ <div class="sg-topic-inner"><span class="sg-topic-label">SIGNGYAAN UI</span><a href={url('/docs/installation/')}>Get started</a><a href={url('/components/')}>Components</a><a href={url('/docs/tokens/')}>Design system</a><a href={url('/docs/accessibility/')}>Accessibility</a></div>
 </div>
+<div class="sg-doc-shell">
+ <aside id="docs-sidebar" class="sg-doc-sidebar" aria-label="Documentation">
+  <div class="sg-sidebar-intro">DOCUMENTATION <span class="sg-doc-version">v0.2</span></div>
+  {groupList.map(group=><details class="sg-nav-group" open={group.name===currentGroup||group.name==='Getting started'}>
+   <summary>{group.name}</summary>
+   <ul>{group.links.map(([name,href])=><li><a class="sg-doc-nav-link" href={url(href)} aria-current={pathname===href?'page':undefined}>{name}</a></li>)}</ul>
+  </details>)}
+ </aside>
+ <main id="main-content" tabindex="-1" class="sg-doc-main">
+  {onDoc&&<nav class="sg-breadcrumbs" aria-label="Breadcrumb"><a href={url('/')}>Home</a><span aria-hidden="true">›</span><a href={url('/components/')}>{currentGroup||'Docs'}</a><span aria-hidden="true">›</span><span aria-current="page">{title}</span></nav>}
+  <slot/>
+  <footer class="sg-doc-footer"><span>© 2026 SignGyaan UI · MIT License</span><a href="https://github.com/InKunalMahajan/SignGyaan-UI">View source on GitHub</a></footer>
+ </main>
+ <aside class="sg-toc" aria-label="On this page"><div class="sg-toc-title">ON THIS PAGE</div><nav id="toc-links" aria-label="Page headings"><span class="sg-toc-empty">Page overview</span></nav><a href="#main-content" class="sg-toc-top">Back to top ↑</a></aside>
+</div>
+<dialog id="docs-search-dialog" class="sg-search-dialog" aria-labelledby="search-dialog-title">
+ <div class="sg-search-heading"><h2 id="search-dialog-title">Search SignGyaan UI</h2><button type="button" class="sg-icon-button" id="docs-search-close" aria-label="Close search">✕</button></div>
+ <label for="docs-search-input" class="sr-only">Search documentation pages</label>
+ <input id="docs-search-input" type="search" class="sg-search-input" placeholder="Search components, guides and topics..." autocomplete="off"/>
+ <p class="sg-search-count" aria-live="polite" id="docs-search-count">Browse all documentation pages</p>
+ <div class="sg-search-results" id="docs-search-results">
+  {allLinks.map(link=><a href={url(link.href)} data-search-item data-search-text={(link.name+' '+link.category).toLowerCase()}><span>{link.name}</span><small>{link.category}</small></a>)}
+ </div>
+ <p class="sg-search-footer">Press Esc to close · Enter to open a result</p>
+</dialog>
 <script>
  const themeButton=document.getElementById('theme-button');
  const themeLabel=document.getElementById('theme-label');
- function syncThemeButton() {
-   const dark=document.documentElement.dataset.theme==='dark';
-   themeButton?.setAttribute('aria-pressed',String(dark));
-   themeButton?.setAttribute('aria-label',dark?'Switch to light mode':'Switch to dark mode');
-   if(themeLabel)themeLabel.textContent=dark?'Light':'Dark';
+ function syncThemeButton(){
+  const dark=document.documentElement.dataset.theme==='dark';
+  themeButton?.setAttribute('aria-pressed',String(dark));
+  themeButton?.setAttribute('aria-label',dark?'Switch to light mode':'Switch to dark mode');
+  if(themeLabel)themeLabel.textContent=dark?'Light':'Dark';
  }
  syncThemeButton();
  themeButton?.addEventListener('click',()=>{
-   const theme=document.documentElement.dataset.theme==='dark'?'light':'dark';
-   document.documentElement.dataset.theme=theme;
-   try {localStorage.setItem('sg-theme',theme);} catch (_) {}
-   syncThemeButton();
+  const theme=document.documentElement.dataset.theme==='dark'?'light':'dark';
+  document.documentElement.dataset.theme=theme;
+  try{localStorage.setItem('sg-theme',theme)}catch(_){}
+  syncThemeButton();
  });
  const menuButton=document.getElementById('menu-button');
  const sidebar=document.getElementById('docs-sidebar');
  const menuLabel=document.getElementById('menu-label');
  const desktop=window.matchMedia('(min-width: 1024px)');
  const isOpen=()=>menuButton?.getAttribute('aria-expanded')==='true';
- function setMenuOpen(open, restoreFocus=false) {
-   if (!menuButton || !sidebar) return;
-   menuButton.setAttribute('aria-expanded',String(open));
-   menuButton.setAttribute('aria-label',open?'Close documentation menu':'Open documentation menu');
-   if (menuLabel) menuLabel.textContent=open?'Close':'Menu';
-   if (!desktop.matches) sidebar.classList.toggle('hidden',!open);
-   if (restoreFocus) menuButton.focus();
+ function setMenuOpen(open:boolean,restoreFocus=false){
+  if(!menuButton||!sidebar)return;
+  menuButton.setAttribute('aria-expanded',String(open));
+  menuButton.setAttribute('aria-label',open?'Close documentation menu':'Open documentation menu');
+  if(menuLabel)menuLabel.textContent=open?'✕':'☰';
+  sidebar.classList.toggle('sg-mobile-open',open&&!desktop.matches);
+  if(restoreFocus)menuButton.focus();
  }
- menuButton?.addEventListener('click',()=>{
-   const open=!isOpen();
-   setMenuOpen(open);
-   if(open) sidebar?.querySelector('a')?.focus();
+ menuButton?.addEventListener('click',()=>setMenuOpen(!isOpen()));
+ sidebar?.addEventListener('click',e=>{if(e.target instanceof Element&&e.target.closest('a')&&!desktop.matches)setMenuOpen(false)});
+ document.addEventListener('pointerdown',e=>{
+  if(!desktop.matches&&isOpen()&&e.target instanceof Node&&!sidebar?.contains(e.target)&&!menuButton?.contains(e.target))setMenuOpen(false);
  });
- document.addEventListener('keydown',event=>{
-   if(event.key==='Escape' && isOpen() && !desktop.matches) {
-     setMenuOpen(false,true);
-   }
+ desktop.addEventListener('change',()=>setMenuOpen(false));
+ const search=document.querySelector<HTMLDialogElement>('#docs-search-dialog');
+ const searchInput=document.querySelector<HTMLInputElement>('#docs-search-input');
+ const searchItems=Array.from(document.querySelectorAll<HTMLElement>('[data-search-item]'));
+ const count=document.querySelector<HTMLElement>('#docs-search-count');
+ function filterSearch(){
+  const query=(searchInput?.value||'').trim().toLowerCase();let shown=0;
+  searchItems.forEach(item=>{
+   const match=(item.dataset.searchText||'').includes(query);
+   item.hidden=!match;
+   if(match)shown++;
+  });
+  if(count)count.textContent=shown+' matching pages';
+ }
+ function openSearch(){
+  if(!search||search.open)return;
+  search.showModal();if(searchInput){searchInput.value='';filterSearch();searchInput.focus()}
+ }
+ document.querySelector('#docs-search-open')?.addEventListener('click',openSearch);
+ document.querySelector('#docs-search-close')?.addEventListener('click',()=>search?.close());
+ searchInput?.addEventListener('input',filterSearch);
+ searchInput?.addEventListener('keydown',e=>{
+  if(e.key==='Enter'){const first=searchItems.find(item=>!item.hidden) as HTMLAnchorElement|undefined;if(first){e.preventDefault();first.click()}}
  });
- sidebar?.addEventListener('click',event=>{
-   if(event.target instanceof Element && event.target.closest('a') && !desktop.matches) {
-     setMenuOpen(false);
-   }
+ search?.addEventListener('click',e=>{if(e.target===search)search.close()});
+ document.addEventListener('keydown',e=>{
+  if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();openSearch()}
+  if(e.key==='Escape'&&isOpen()&&!desktop.matches)setMenuOpen(false,true);
  });
- document.addEventListener('pointerdown',event=>{
-   if(!desktop.matches && isOpen() && event.target instanceof Node && !sidebar?.contains(event.target) && !menuButton?.contains(event.target)) setMenuOpen(false);
- });
- desktop.addEventListener('change',()=>{
-   if(sidebar) sidebar.classList.toggle('hidden',!desktop.matches);
-   setMenuOpen(false);
- });
+ const toc=document.getElementById('toc-links');
+ const headings=Array.from(document.querySelectorAll<HTMLElement>('#main-content .docs h2, #main-content .docs h3'));
+ if(toc&&headings.length){
+  toc.replaceChildren();
+  headings.forEach((heading,i)=>{
+   if(!heading.id)heading.id='section-'+i;
+   const a=document.createElement('a');a.href='#'+heading.id;a.textContent=heading.textContent||'Section';
+   if(heading.tagName==='H3')a.classList.add('sg-toc-sub');
+   toc.appendChild(a);
+  });
+ }
 </script>
 </body></html>
