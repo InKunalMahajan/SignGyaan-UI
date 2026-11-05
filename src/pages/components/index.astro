@@ -1,5 +1,6 @@
 ---
 import DocsLayout from '../../layouts/DocsLayout.astro';
+import PageHeader from '../../components/PageHeader.astro';
 const base=import.meta.env.BASE_URL;
 const url=(path:string)=>base+path.replace(/^\//,'');
 const components=[
@@ -127,11 +128,7 @@ const components=[
 const categories=['All',...new Set(components.map(c=>c.category))];
 ---
 <DocsLayout title="Components" description="Browse 20 Free Tailwind CSS components.">
- <section class="mb-8">
-  <p class="mb-2 text-xs font-semibold uppercase tracking-wider text-sg-primary">Component library</p>
-  <h1 class="text-3xl font-extrabold tracking-tight sm:text-4xl">Explore 20 Free components</h1>
-  <p class="mt-3 max-w-2xl text-sg-muted">Accessible foundations, consistent styles, live examples and copyable HTML. Choose a category or search by name.</p>
- </section>
+ <PageHeader eyebrow="COMPONENT LIBRARY" title="Explore 20 Free components" description="Accessible foundations, consistent styles, live examples and copyable HTML. Choose a category or search by name."/>
  <section class="mb-6 space-y-4" aria-label="Filter components">
   <label for="component-search" class="block text-sm font-medium">Search components</label>
   <input id="component-search" type="search" class="sg-input max-w-xl" placeholder="Search button, table, modal..." autocomplete="off"/>

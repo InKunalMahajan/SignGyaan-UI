@@ -64,3 +64,14 @@ test('developer documentation layout includes search, on-page TOC and grouped na
  assert.match(layout,/aria-label="Documentation"/);
  assert.match(layout,/aria-pressed/);
 });
+
+test('all page types use a shared documentation page heading',()=>{
+ const home=read('src/pages/index.astro');
+ const catalog=read('src/pages/components/index.astro');
+ const docs=read('src/pages/docs/[...slug].astro');
+ const header=read('src/components/PageHeader.astro');
+ for(const source of [home,catalog,docs])assert.match(source,/<PageHeader /);
+ assert.match(header,/sg-page-heading/);
+ assert.match(docs,/sg-page-pagination/);
+ assert.match(read('src/layouts/DocsLayout.astro'),/sg-breadcrumbs/);
+});

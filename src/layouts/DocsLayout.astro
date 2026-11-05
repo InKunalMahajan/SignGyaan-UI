@@ -15,6 +15,7 @@ const groupList=[
 ];
 const allLinks=groupList.flatMap(g=>g.links.map(([name,href])=>({name,href,category:g.name})));
 const onDoc=pathname.startsWith('/docs/');
+const onComponents=pathname.startsWith('/components/');
 const currentGroup=groupList.find(g=>g.links.some(([,href])=>href===pathname))?.name;
 ---
 <!doctype html>
@@ -38,7 +39,7 @@ const currentGroup=groupList.find(g=>g.links.some(([,href])=>href===pathname))?.
   <nav class="sg-global-nav" aria-label="Primary navigation">
    <a href={url('/')} aria-current={pathname==='/'?'page':undefined}>Overview</a>
    <a href={url('/docs/installation/')} aria-current={onDoc?'page':undefined}>Documentation</a>
-   <a href={url('/components/')} aria-current={pathname.startsWith('/components/')?'page':undefined}>Components</a>
+   <a href={url('/components/')} aria-current={onComponents?'page':undefined}>Components</a>
    <a href={url('/docs/blade/')}>Frameworks</a>
   </nav>
   <div class="sg-header-actions">
@@ -56,12 +57,16 @@ const currentGroup=groupList.find(g=>g.links.some(([,href])=>href===pathname))?.
  <aside id="docs-sidebar" class="sg-doc-sidebar" aria-label="Documentation">
   <div class="sg-sidebar-intro">DOCUMENTATION <span class="sg-doc-version">v0.2</span></div>
   {groupList.map(group=><details class="sg-nav-group" open={group.name===currentGroup||group.name==='Getting started'}>
-   <summary>{group.name}</summary>
+   <summary tabindex="0">{group.name}</summary>
    <ul>{group.links.map(([name,href])=><li><a class="sg-doc-nav-link" href={url(href)} aria-current={pathname===href?'page':undefined}>{name}</a></li>)}</ul>
   </details>)}
  </aside>
  <main id="main-content" tabindex="-1" class="sg-doc-main">
-  {onDoc&&<nav class="sg-breadcrumbs" aria-label="Breadcrumb"><a href={url('/')}>Home</a><span aria-hidden="true">›</span><a href={url('/components/')}>{currentGroup||'Docs'}</a><span aria-hidden="true">›</span><span aria-current="page">{title}</span></nav>}
+  {(onDoc||onComponents)&&<nav class="sg-breadcrumbs" aria-label="Breadcrumb">
+   <a href={url('/')}>Home</a><span aria-hidden="true">›</span>
+   {onDoc&&<><a href={url(currentGroup==='Getting started'||currentGroup==='Foundations'?'/docs/installation/':currentGroup==='Frameworks'?'/docs/blade/':'/components/')}>{currentGroup||'Documentation'}</a><span aria-hidden="true">›</span></>}
+   <span aria-current="page">{title}</span>
+  </nav>}
   <slot/>
   <footer class="sg-doc-footer"><span>© 2026 SignGyaan UI · MIT License</span><a href="https://github.com/InKunalMahajan/SignGyaan-UI">View source on GitHub</a></footer>
  </main>
@@ -72,7 +77,7 @@ const currentGroup=groupList.find(g=>g.links.some(([,href])=>href===pathname))?.
  <label for="docs-search-input" class="sr-only">Search documentation pages</label>
  <input id="docs-search-input" type="search" class="sg-search-input" placeholder="Search components, guides and topics..." autocomplete="off"/>
  <p class="sg-search-count" aria-live="polite" id="docs-search-count">Browse all documentation pages</p>
- <div class="sg-search-results" id="docs-search-results">
+ <div class="sg-search-results" id="docs-search-results" role="region" aria-label="Search results">
   {allLinks.map(link=><a href={url(link.href)} data-search-item data-search-text={(link.name+' '+link.category).toLowerCase()}><span>{link.name}</span><small>{link.category}</small></a>)}
  </div>
  <p class="sg-search-footer">Press Esc to close · Enter to open a result</p>
@@ -106,7 +111,10 @@ const currentGroup=groupList.find(g=>g.links.some(([,href])=>href===pathname))?.
   sidebar.classList.toggle('sg-mobile-open',open&&!desktop.matches);
   if(restoreFocus)menuButton.focus();
  }
- menuButton?.addEventListener('click',()=>setMenuOpen(!isOpen()));
+ menuButton?.addEventListener('click',()=>{
+  const next=!isOpen();setMenuOpen(next);
+  if(next&&!desktop.matches)sidebar?.querySelector('summary')?.focus();
+ });
  sidebar?.addEventListener('click',e=>{if(e.target instanceof Element&&e.target.closest('a')&&!desktop.matches)setMenuOpen(false)});
  document.addEventListener('pointerdown',e=>{
   if(!desktop.matches&&isOpen()&&e.target instanceof Node&&!sidebar?.contains(e.target)&&!menuButton?.contains(e.target))setMenuOpen(false);

@@ -1,13 +1,12 @@
 ---
 import DocsLayout from '../layouts/DocsLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
 const base=import.meta.env.BASE_URL;
 const url=(path:string)=>base+path.replace(/^\//,'');
 ---
 <DocsLayout title="Home">
-<section class="py-8 sm:py-14">
- <span class="sg-badge">Open source · Tailwind CSS v4</span>
- <h1 class="mt-6 max-w-3xl text-4xl font-extrabold leading-tight tracking-tight sm:text-6xl">Build consistent interfaces with SignGyaan UI.</h1>
- <p class="mt-5 max-w-2xl text-base leading-8 text-sg-muted sm:text-lg">A framework-independent design foundation with 20 Free components. Use shared CSS in Laravel Blade, React, Vue, or plain HTML.</p>
+<section class="sg-page-intro">
+ <PageHeader eyebrow="OPEN SOURCE · TAILWIND CSS V4" title="Build consistent interfaces with SignGyaan UI" description="A framework-independent design foundation with 20 Free components. Use shared CSS in Laravel Blade, React, Vue, or plain HTML."/>
  <div class="mt-7 flex flex-wrap gap-3">
   <a class="sg-button sg-button-primary" href={url('/docs/installation/')}>Get started</a>
   <a class="sg-button sg-button-outline" href={url('/components/')}>Browse all components</a>
