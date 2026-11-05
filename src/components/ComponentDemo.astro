@@ -27,7 +27,7 @@ const code=examples[component]||'';
 ---
 {code && <section class="sg-demo my-6 min-w-0 overflow-hidden rounded-sg-card border border-sg-border" data-demo={component}>
  <div class="flex flex-wrap items-center justify-between gap-3 border-b border-sg-border bg-sg-surface px-4 py-3">
-  <span class="text-sm font-semibold text-sg-ink">Live preview</span>
+  <span class="text-sm font-semibold text-sg-ink">Interactive preview</span>
   <button type="button" class="sg-button sg-button-outline sg-button-sm" data-copy-code aria-describedby="copy-feedback">Copy HTML</button>
  </div>
  <div class="bg-sg-page p-5 sm:p-7" data-preview>
@@ -52,7 +52,7 @@ const code=examples[component]||'';
   {component==='avatar' && <div class="flex items-center gap-3"><span class="sg-avatar" role="img" aria-label="SignGyaan learner">SG</span><span class="sg-avatar" role="img" aria-label="Admin">AD</span></div>}
   {component==='separator' && <div class="max-w-sm space-y-3 text-sm text-sg-ink"><p>Section one</p><hr class="sg-separator"/><p>Section two</p></div>}
  </div>
- <div class="flex items-center justify-between border-t border-sg-border px-4 py-2"><span class="text-xs text-sg-muted">HTML / shared sg-* CSS classes</span><span id="copy-feedback" class="sr-only" role="status" aria-live="polite" data-copy-status></span></div>
+ <div class="flex items-center justify-between border-t border-sg-border px-4 py-2"><span class="text-xs text-sg-muted">HTML · Shared SignGyaan CSS</span><span id="copy-feedback" class="sr-only" role="status" aria-live="polite" data-copy-status></span></div>
  <pre class="!m-0 !max-w-full !overflow-x-auto !rounded-none text-xs" tabindex="0" aria-label="HTML source code"><code>{code}</code></pre>
 </section>}
 <script>

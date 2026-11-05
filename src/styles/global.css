@@ -23,3 +23,18 @@ a:focus-visible,button:focus-visible {outline:2px solid var(--color-sg-primary);
 [data-theme="dark"] .docs code:not(pre code) {background:#334155;color:#e0e7ff;}
 [data-theme="dark"] .docs a:not([class]) {color:#c4b5fd;}
 @media (prefers-reduced-motion: reduce) { html {scroll-behavior:auto;} *,*::before,*::after {animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;} }
+
+/* UI review: catalog, content rhythm, contrast and keyboard states */
+.sg-catalog-card { display:block;min-width:0;padding:1.25rem;border:1px solid var(--color-sg-border);border-radius:var(--radius-sg-card);background:var(--color-sg-surface);color:var(--color-sg-ink);text-decoration:none;transition:border-color .15s ease,box-shadow .15s ease; }
+.sg-catalog-card:hover {border-color:var(--color-sg-primary);box-shadow:0 4px 18px rgb(0 0 0 / .07);}
+.sg-catalog-card:focus-visible {outline:3px solid var(--color-sg-primary);outline-offset:3px;}
+[data-component-card][hidden] {display:none !important;}
+[data-filter][aria-pressed="true"] {background:var(--color-sg-primary);color:white;border-color:var(--color-sg-primary);}
+.docs :is(h2,h3) {scroll-margin-top:6rem;}
+.docs h3 {font-size:1.075rem;font-weight:650;margin:1.5rem 0 .5rem;}
+.docs :is(p,ul,ol) + :is(p,ul,ol) {margin-top:.7rem;}
+.docs pre {line-height:1.65;tab-size:2;}
+.docs pre:focus-visible {outline:2px solid var(--color-sg-primary);outline-offset:-2px;}
+[data-theme="dark"] .sg-catalog-card:hover {border-color:#c4b5fd;}
+[data-theme="dark"] .sg-catalog-card .text-sg-primary {color:#c4b5fd;}
+@media (prefers-reduced-motion:reduce){.sg-catalog-card{transition:none;}}

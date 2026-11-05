@@ -43,3 +43,15 @@ test('Phase 4: seven new components have styles and previews',()=>{
  assert.match(demo,/aria-checked/);
  assert.match(demo,/scope="col"/);
 });
+
+test('UI review: component catalog and homepage inventory remain consistent',()=>{
+ const home=read('src/pages/index.astro');
+ const catalog=read('src/pages/components/index.astro');
+ const layout=read('src/layouts/DocsLayout.astro');
+ assert.match(home,/20 Free components/);
+ assert.match(catalog,/data-component-card/);
+ assert.match(catalog,/component-search/);
+ assert.match(catalog,/aria-pressed/);
+ assert.match(layout,/\/components\//);
+ assert.doesNotMatch(home,/seven free components/i);
+});

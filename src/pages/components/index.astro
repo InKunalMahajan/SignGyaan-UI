@@ -1,0 +1,176 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro';
+const base=import.meta.env.BASE_URL;
+const url=(path:string)=>base+path.replace(/^\//,'');
+const components=[
+  {
+    "name": "Button",
+    "slug": "button",
+    "description": "Clickable actions",
+    "category": "Actions & feedback"
+  },
+  {
+    "name": "Badge",
+    "slug": "badge",
+    "description": "Compact statuses",
+    "category": "Actions & feedback"
+  },
+  {
+    "name": "Alert",
+    "slug": "alert",
+    "description": "Important messages",
+    "category": "Actions & feedback"
+  },
+  {
+    "name": "Spinner",
+    "slug": "spinner",
+    "description": "Loading indicator",
+    "category": "Actions & feedback"
+  },
+  {
+    "name": "Progress",
+    "slug": "progress",
+    "description": "Completion status",
+    "category": "Actions & feedback"
+  },
+  {
+    "name": "Modal",
+    "slug": "modal",
+    "description": "Dialog window",
+    "category": "Actions & feedback"
+  },
+  {
+    "name": "Input",
+    "slug": "input",
+    "description": "Single-line field",
+    "category": "Forms"
+  },
+  {
+    "name": "Textarea",
+    "slug": "textarea",
+    "description": "Long-form text",
+    "category": "Forms"
+  },
+  {
+    "name": "Select",
+    "slug": "select",
+    "description": "Choose an option",
+    "category": "Forms"
+  },
+  {
+    "name": "Checkbox",
+    "slug": "checkbox",
+    "description": "Multiple selections",
+    "category": "Forms"
+  },
+  {
+    "name": "Radio",
+    "slug": "radio",
+    "description": "Choose one answer",
+    "category": "Forms"
+  },
+  {
+    "name": "Switch",
+    "slug": "switch",
+    "description": "On/off settings",
+    "category": "Forms"
+  },
+  {
+    "name": "Navbar",
+    "slug": "navbar",
+    "description": "Top navigation",
+    "category": "Navigation & layout"
+  },
+  {
+    "name": "Sidebar",
+    "slug": "sidebar",
+    "description": "Side navigation",
+    "category": "Navigation & layout"
+  },
+  {
+    "name": "Tabs",
+    "slug": "tabs",
+    "description": "Section switching",
+    "category": "Navigation & layout"
+  },
+  {
+    "name": "Accordion",
+    "slug": "accordion",
+    "description": "Disclosure sections",
+    "category": "Navigation & layout"
+  },
+  {
+    "name": "Separator",
+    "slug": "separator",
+    "description": "Section divider",
+    "category": "Navigation & layout"
+  },
+  {
+    "name": "Card",
+    "slug": "card",
+    "description": "Content surface",
+    "category": "Data display"
+  },
+  {
+    "name": "Table",
+    "slug": "table",
+    "description": "Tabular data",
+    "category": "Data display"
+  },
+  {
+    "name": "Avatar",
+    "slug": "avatar",
+    "description": "User identity",
+    "category": "Data display"
+  }
+];
+const categories=['All',...new Set(components.map(c=>c.category))];
+---
+<DocsLayout title="Components" description="Browse 20 Free Tailwind CSS components.">
+ <section class="mb-8">
+  <p class="mb-2 text-xs font-semibold uppercase tracking-wider text-sg-primary">Component library</p>
+  <h1 class="text-3xl font-extrabold tracking-tight sm:text-4xl">Explore 20 Free components</h1>
+  <p class="mt-3 max-w-2xl text-sg-muted">Accessible foundations, consistent styles, live examples and copyable HTML. Choose a category or search by name.</p>
+ </section>
+ <section class="mb-6 space-y-4" aria-label="Filter components">
+  <label for="component-search" class="block text-sm font-medium">Search components</label>
+  <input id="component-search" type="search" class="sg-input max-w-xl" placeholder="Search button, table, modal..." autocomplete="off"/>
+  <div class="flex flex-wrap gap-2" role="group" aria-label="Filter by category">
+   {categories.map((category,i)=><button type="button" class="sg-button sg-button-outline sg-button-sm" data-filter={category} aria-pressed={i===0?'true':'false'}>{category}</button>)}
+  </div>
+  <p class="text-sm text-sg-muted" aria-live="polite"><span id="component-count">20</span> components shown</p>
+ </section>
+ <div id="component-grid" class="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+ {components.map(c=><a href={url('/docs/'+c.slug+'/')} class="sg-catalog-card" data-component-card data-category={c.category} data-search={c.name.toLowerCase()+' '+c.description.toLowerCase()}>
+   <span class="text-xs font-medium text-sg-muted">{c.category}</span>
+   <span class="mt-3 block text-lg font-bold">{c.name}</span>
+   <span class="mt-1 block text-sm text-sg-muted">{c.description}</span>
+   <span class="mt-4 inline-block text-sm font-semibold text-sg-primary">View documentation →</span>
+ </a>)}
+ </div>
+ <p id="no-results" class="hidden rounded-sg border border-sg-border p-5 text-sm text-sg-muted">No components match. Try a different search or category.</p>
+</DocsLayout>
+<script>
+ const input=document.querySelector<HTMLInputElement>('#component-search');
+ const buttons=Array.from(document.querySelectorAll<HTMLButtonElement>('[data-filter]'));
+ const cards=Array.from(document.querySelectorAll<HTMLElement>('[data-component-card]'));
+ let category='All';
+ function update(){
+  const query=(input?.value||'').trim().toLowerCase();
+  let count=0;
+  cards.forEach(card=>{
+   const match=(category==='All'||card.dataset.category===category)&&(!query||(card.dataset.search||'').includes(query));
+   card.hidden=!match;if(match)count++;
+  });
+  const output=document.querySelector<HTMLElement>('#component-count');
+  if(output)output.textContent=String(count);
+  const empty=document.querySelector<HTMLElement>('#no-results');
+  if(empty)empty.hidden=count>0;
+ }
+ buttons.forEach(b=>b.addEventListener('click',()=>{
+  category=b.dataset.filter||'All';
+  buttons.forEach(item=>item.setAttribute('aria-pressed',String(item===b)));
+  update();
+ }));
+ input?.addEventListener('input',update);
+</script>
