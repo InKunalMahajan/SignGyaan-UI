@@ -19,3 +19,22 @@ description: Shared tab styling with an accessible interaction contract.
 ```
 
 **Interaction required:** connect the buttons with JavaScript, Alpine, Livewire, React, or Vue. When building ARIA tabs, implement Left/Right arrow navigation, focus management, selection state and hide/show panels. Styling alone is not a finished tab widget.
+
+## Design and behavior
+
+Switch between related sections without page navigation.
+
+| Topic | Guidance |
+| --- | --- |
+| Common usage | Overview, lessons, resources. |
+| Accessibility | Implement arrows, Home/End, roving tabindex, and correctly linked tabpanels. |
+
+## Framework integration
+
+Use shared `sg-*` CSS classes in HTML, Laravel Blade, React and Vue. Interactive behavior must be provided by the selected framework. See [Blade](../blade/), [React](../react/), and [Vue](../vue/) documentation.
+
+## Testing checklist
+
+- Verify relevant keyboard controls and visible focus.
+- Inspect at 320px mobile and 1440px desktop widths.
+- Verify light/dark mode, correct labels, and state changes.
