@@ -1,0 +1,31 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+const read=p=>readFileSync(new URL('../'+p, import.meta.url),'utf8');
+
+test('documentation has skip navigation and keyboard menu handling',()=>{
+ const layout=read('src/layouts/DocsLayout.astro');
+ assert.match(layout,/class="sg-skip-link"/);
+ assert.match(layout,/key==='Escape'/);
+ assert.match(layout,/aria-expanded/);
+ assert.match(layout,/aria-pressed/);
+ assert.match(layout,/data-theme/);
+});
+
+test('interactive component previews include accessible tabs, dialog, and announcements',()=>{
+ const demo=read('src/components/ComponentDemo.astro');
+ assert.match(demo,/aria-labelledby="demo-modal-title"/);
+ assert.match(demo,/showModal\(\)/);
+ assert.match(demo,/ArrowRight/);
+ assert.match(demo,/ArrowLeft/);
+ assert.match(demo,/aria-live="polite"/);
+ assert.match(demo,/aria-valuenow/);
+});
+
+test('shared styles honor reduced motion and mobile layout',()=>{
+ const css=read('src/styles/global.css');
+ const components=read('packages/core/src/components.css');
+ assert.match(css,/prefers-reduced-motion/);
+ assert.match(css,/overflow-x:auto/);
+ assert.match(components,/max-w-64/);
+});

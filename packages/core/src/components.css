@@ -14,13 +14,13 @@
   .sg-spinner { @apply inline-block h-5 w-5 animate-spin rounded-full border-2 border-sg-border border-t-sg-primary; }
   .sg-select { @apply block w-full rounded-sg border border-sg-border bg-sg-surface px-3 py-2.5 text-sm text-sg-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sg-primary; }
   .sg-checkbox { @apply size-4 rounded border-sg-border accent-sg-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sg-primary; }
-  .sg-tabs { @apply flex gap-1 border-b border-sg-border; }
-  .sg-tab { @apply cursor-pointer border-b-2 border-transparent px-4 py-2 text-sm text-sg-muted hover:text-sg-ink focus-visible:outline-2 focus-visible:outline-sg-primary; }
+  .sg-tabs { @apply flex max-w-full gap-1 overflow-x-auto border-b border-sg-border; }
+  .sg-tab { @apply shrink-0 cursor-pointer border-b-2 border-transparent px-4 py-2 text-sm text-sg-muted hover:text-sg-ink focus-visible:outline-2 focus-visible:outline-sg-primary; }
   .sg-tab[aria-selected="true"] { @apply border-sg-primary font-semibold text-sg-primary; }
-  .sg-modal { @apply m-auto max-w-lg rounded-sg-card border border-sg-border bg-sg-surface p-6 text-sg-ink shadow-xl; }
+  .sg-modal { @apply m-auto max-h-[90vh] w-[min(90vw,32rem)] max-w-lg overflow-y-auto rounded-sg-card border border-sg-border bg-sg-surface p-6 text-sg-ink shadow-xl; }
   .sg-modal::backdrop { background:rgb(15 23 42 / .6); }
   .sg-navbar { @apply flex flex-wrap items-center justify-between gap-4 border-b border-sg-border bg-sg-surface px-5 py-3 text-sg-ink; }
-  .sg-sidebar { @apply w-64 border-r border-sg-border bg-sg-surface p-4 text-sg-ink; }
+  .sg-sidebar { @apply w-full max-w-64 border-r border-sg-border bg-sg-surface p-4 text-sg-ink; }
   .sg-nav-link { @apply block rounded-sg px-3 py-2 text-sm text-sg-muted hover:bg-sg-page hover:text-sg-ink; }
   .sg-nav-link[aria-current="page"] { @apply bg-sg-page font-semibold text-sg-primary; }
 }
