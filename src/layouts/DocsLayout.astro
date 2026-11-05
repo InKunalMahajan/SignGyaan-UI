@@ -6,7 +6,7 @@ const url=(path:string)=>base+path.replace(/^\//,'');
 const pathname=Astro.url.pathname.replace(base,'/').replace(/\/+/g,'/');
 const groupList=[
  {name:'Getting started',links:[['Overview','/'],['Component catalog','/components/'],['Installation','/docs/installation/'],['Architecture','/docs/architecture/']]},
- {name:'Foundations',links:[['Design tokens','/docs/tokens/'],['Themes','/docs/themes/'],['Accessibility','/docs/accessibility/']]},
+ {name:'Foundations',links:[['Design tokens','/docs/tokens/'],['Themes','/docs/themes/'],['Accessibility','/docs/accessibility/'],['Testing and review','/docs/testing/']]},
  {name:'Actions & feedback',links:[['Button','/docs/button/'],['Badge','/docs/badge/'],['Alert','/docs/alert/'],['Spinner','/docs/spinner/'],['Progress','/docs/progress/'],['Modal','/docs/modal/']]},
  {name:'Forms',links:[['Input','/docs/input/'],['Textarea','/docs/textarea/'],['Select','/docs/select/'],['Checkbox','/docs/checkbox/'],['Radio','/docs/radio/'],['Switch','/docs/switch/']]},
  {name:'Navigation & layout',links:[['Navbar','/docs/navbar/'],['Sidebar','/docs/sidebar/'],['Tabs','/docs/tabs/'],['Accordion','/docs/accordion/'],['Separator','/docs/separator/']]},

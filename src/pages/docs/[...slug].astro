@@ -9,7 +9,7 @@ export async function getStaticPaths(){
 }
 const {entry}=Astro.props;
 const {Content}=await render(entry);
-const pageOrder=['installation','architecture','tokens','themes','accessibility','button','badge','alert','spinner','progress','modal','input','textarea','select','checkbox','radio','switch','navbar','sidebar','tabs','accordion','separator','card','table','avatar','blade','react','vue'];
+const pageOrder=['installation','architecture','tokens','themes','accessibility','testing','button','badge','alert','spinner','progress','modal','input','textarea','select','checkbox','radio','switch','navbar','sidebar','tabs','accordion','separator','card','table','avatar','blade','react','vue'];
 const currentIndex=pageOrder.indexOf(entry.id);
 const base=import.meta.env.BASE_URL;
 const link=(slug:string)=>base+'docs/'+slug+'/';

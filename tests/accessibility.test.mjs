@@ -75,3 +75,14 @@ test('all page types use a shared documentation page heading',()=>{
  assert.match(docs,/sg-page-pagination/);
  assert.match(read('src/layouts/DocsLayout.astro'),/sg-breadcrumbs/);
 });
+
+test('component docs have framework and QA guidance',()=>{
+ const names=["button","badge","alert","spinner","progress","modal","input","textarea","select","checkbox","radio","switch","navbar","sidebar","tabs","accordion","separator","card","table","avatar"];
+ for(const name of names){
+  const source=read('src/content/docs/'+name+'.md');
+  assert.match(source,/## Design and behavior/);
+  assert.match(source,/## Framework integration/);
+  assert.match(source,/## Testing checklist/);
+ }
+ assert.match(read('src/content/docs/testing.md'),/## Manual browser review/);
+});
